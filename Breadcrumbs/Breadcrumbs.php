@@ -83,8 +83,8 @@ class Breadcrumbs
                 throw new InvalidArgumentException("Expected value of '\$id' to be string, {$type} given.");
             }
 
-            if (!is_string($link) || !is_null($link)) {
-                $type = gettype($type);
+            if (!is_string($link) && !is_null($link)) {
+                $type = gettype($link);
                 throw new InvalidArgumentException("Expected value of '\$link' to be either string or null, {$type} given.");
             }
 
@@ -95,7 +95,7 @@ class Breadcrumbs
 
             if (!is_bool($linked)) {
                 $type = gettype($linked);
-                throw new InvalidArgumentException("Expected value of '\$current' to be boolean, {$type} given.");
+                throw new InvalidArgumentException("Expected value of '\$linked' to be boolean, {$type} given.");
             }
 
             $this->crumbs[$id] = [
@@ -145,6 +145,22 @@ class Breadcrumbs
 
             if (!array_key_exists($id, $this->crumbs)) {
                 throw new OutOfBoundsException("No such id '{$id}' in array");
+            }
+
+            foreach ($params as $key => $value) {
+                if (($key == 'id') && (!is_string($value))) {
+                    $type = gettype($value);
+                    throw new InvalidArgumentException("Expected value of 'id' to be string, {$type} given.");
+                } else if (($key == 'label') && (!is_string($value))) {
+                    $type = gettype($type);
+                    throw new InvalidArgumentException("Expected value of 'label' to be either string or null, {$type} given.");
+                } else if (($key == 'link') && ((!is_string($value) && !is_null($value)))) {
+                    $type = gettype($type);
+                    throw new InvalidArgumentException("Expected value of 'link' to be either string or null, {$type} given.");
+                } else if (($key == 'linked') && (!is_bool($value))) {
+                    $type = gettype($linked);
+                    throw new InvalidArgumentException("Expected value of 'linked' to be boolean, {$type} given.");
+                }
             }
 
             $this->crumbs[$id] = array_merge($this->crumbs[$id], $params);
