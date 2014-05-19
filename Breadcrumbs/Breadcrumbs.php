@@ -118,8 +118,8 @@ class Breadcrumbs
      * @param string $id Internal identifier
      * @param array $params Associative array holding the values that will be replaced
      *
-     * @throws InvalidArgumentException
      * @throws UnderflowException
+     * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      *
      * @access public
@@ -168,8 +168,8 @@ class Breadcrumbs
      *
      * @param string $id Internal identifier
      *
-     * @throws InvalidArgumentException
      * @throws UnderflowException
+     * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      * 
      * @access public
@@ -212,6 +212,8 @@ class Breadcrumbs
      * Set crumb separator
      *
      * @param string $separator This will be placed between the crumbs
+     * 
+     * @throws Invalid argument exception
      *
      * @access public
      * @return Phalib\Breadcrumbs\Breadcrumbs
@@ -240,8 +242,10 @@ class Breadcrumbs
     /**
      * Set rendering template
      *
-     * @param string $notLinked Markup used on crumbs without link
      * @param string $linked Markup used on crumbs with link
+     * @param string $notLinked Markup used on crumbs without link
+     *
+     * @throws InvalidArgumentException
      *
      * @access public
      * @return Phalib\Breadcrumbs\Breadcrumbs
@@ -249,7 +253,7 @@ class Breadcrumbs
      * @since 1.0
      * @author Ole Aass <ole@oleaass.com>
      */
-    public function setTemplate($notLinked, $linked)
+    public function setTemplate($linked, $notLinked)
     {
         try {
             if (!is_string($notLinked)) {
@@ -261,6 +265,14 @@ class Breadcrumbs
                 $type = gettype($linked);
                 throw new InvalidArgumentException("Expected value of '\$linked' to be string, {$type} given.");
             }
+
+            $this->template = [
+                'linked'        => $linked,
+                'not-linked'    => $notLinked
+            ];
+
+            return $this;
+
         } catch (InvalidArgumentException $e) {
             $message = '[' . __METHOD__ . '] ' . $e->getMessage();
             error_log($message);
@@ -270,8 +282,10 @@ class Breadcrumbs
     /**
      * Render breadcrumb output based on previously set template
      *
+     * @throws UnderflowException
+     *
      * @access public
-     * @return string
+     * @return void
      *
      * @since 1.0
      * @author Ole Aass <ole@oleaass.com>
@@ -297,7 +311,7 @@ class Breadcrumbs
                         (is_null($this->translate)) ? $crumb['label'] : $this->translate->_($crumb['label']),
                         $this->template['not-linked']);
                 }
-                unset($this->crumbs[$key]);
+                $this->remove($key);
                 $output .= (!empty($this->crumbs)) ? $this->separator : '';
             }
 
@@ -310,6 +324,8 @@ class Breadcrumbs
 
     /**
      * Set multi-language support using \Phalcon\Translate\Adapter\NativeArray
+     *
+     * @throws InvalidArgumentException
      *
      * @param \Phalcon\Translate\Adapter\NativeArray $object Instance of Phalcon's Translate adapater
      *
