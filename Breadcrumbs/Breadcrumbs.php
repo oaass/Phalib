@@ -80,22 +80,22 @@ class Breadcrumbs
         try {
             if (!is_string($id)) {
                 $type = gettype($id);
-                throw new InvalidArgumentException("Expected value of '\$id' to be string, {$type} given.");
+                throw new InvalidArgumentException("Expected value of first argument to be string, {$type} given.");
             }
 
             if (!is_string($link) && !is_null($link)) {
                 $type = gettype($link);
-                throw new InvalidArgumentException("Expected value of '\$link' to be either string or null, {$type} given.");
+                throw new InvalidArgumentException("Expected value of second argument to be either string or null, {$type} given.");
             }
 
             if (!is_string($label)) {
                 $type = gettype($label);
-                throw new InvalidArgumentException("Expected value of '\$label' to be string, {$type} given.");
+                throw new InvalidArgumentException("Expected value of third argument to be string, {$type} given.");
             }
 
             if (!is_bool($linked)) {
                 $type = gettype($linked);
-                throw new InvalidArgumentException("Expected value of '\$linked' to be boolean, {$type} given.");
+                throw new InvalidArgumentException("Expected value of fourth argument to be boolean, {$type} given.");
             }
 
             $this->crumbs[$id] = [
@@ -136,11 +136,11 @@ class Breadcrumbs
             }
 
             if (!is_string($id)) {
-                throw new InvalidArgumentException("Expected value of '\$id' to be string, {$type} given.");
+                throw new InvalidArgumentException("Expected value of first argument to be string, {$type} given.");
             }
 
             if (!is_array($params)) {
-                throw new InvalidArgumentException("Expected value of '\$params' to be an array, {$type} given.");
+                throw new InvalidArgumentException("Expected value of second argument to be an array, {$type} given.");
             }
 
             if (!array_key_exists($id, $this->crumbs)) {
@@ -202,7 +202,7 @@ class Breadcrumbs
             }
 
             if (!is_string($id)) {
-                throw new InvalidArgumentException("Expected value of '\$id' to be string, {$type} given.");
+                throw new InvalidArgumentException("Expected value of first argument to be string, {$type} given.");
             }
 
             if (!array_key_exists($id, $this->crumbs)) {
@@ -242,7 +242,7 @@ class Breadcrumbs
         try {
             if (!is_string($separator)) {
                 $type = gettype($separator);
-                throw new InvalidArgumentException("Expected value of '\$separator' to be string, {$type} given.");
+                throw new InvalidArgumentException("Expected value of first argument to be string, {$type} given.");
             }
 
             $this->separator = $separator;
@@ -272,14 +272,14 @@ class Breadcrumbs
     public function setTemplate($linked, $notLinked)
     {
         try {
-            if (!is_string($notLinked)) {
-                $type = gettype($notLinked);
-                throw new InvalidArgumentException("Expected value of '\$notLinked' to be string, {$type} given.");
-            }
-
             if (!is_string($linked)) {
                 $type = gettype($linked);
-                throw new InvalidArgumentException("Expected value of '\$linked' to be string, {$type} given.");
+                throw new InvalidArgumentException("Expected value of first argument to be string, {$type} given.");
+            }
+
+            if (!is_string($notLinked)) {
+                $type = gettype($notLinked);
+                throw new InvalidArgumentException("Expected value of second argument to be string, {$type} given.");
             }
 
             $this->template = [
@@ -355,7 +355,7 @@ class Breadcrumbs
     {
         try {
             if (!($translate instanceof \Phalcon\Translate\Adapter\NativeArray)) {
-                throw new InvalidArgumentException("'\$translate' must be an instance of '\Phalcon\Translate\Adapter\NativeArray'");
+                throw new InvalidArgumentException("First argument must be an instance of '\Phalcon\Translate\Adapter\NativeArray'");
             }
 
             $this->translate = $translate;
