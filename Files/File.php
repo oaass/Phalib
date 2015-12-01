@@ -188,8 +188,6 @@ class File extends PhalconFile
                             $this->getExtension()
                         ], $this->thumbName);
 
-        var_dump($this->getName(), $destination);
-        die();
         $image =  new $this->adapter($destination);
 
         $method = (!$this->thumbCrop) ? 'resize' : 'crop';
