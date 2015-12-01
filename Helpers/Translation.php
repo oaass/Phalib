@@ -20,7 +20,7 @@ use Phalcon\Http\Request;
  * @package Phalib
  * @subpackage Helpers
  */
-class Translation extends Request
+class Translation
 {
     /**
      * @var string $path Path to where the language files are located
