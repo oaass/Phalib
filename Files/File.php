@@ -176,11 +176,15 @@ class File extends PhalconFile
     /**
      * Make thumbnail image
      *
+     * @param string $destination Path and filename of thumbnail
+     *
      * @access public
      * @return boolean
      */
-    public function makeThumbnailImage()
+    public function makeThumbnailImage($destination = null)
     {
+        $this->thumbName = (is_null($destination)) ? $this->thumbName : $destination;
+
         $destination = str_replace([
                             '{filename}','{extension}'
                         ],[
