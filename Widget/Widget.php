@@ -20,7 +20,7 @@ use Phalcon\Mvc\View\Simple as SimpleView;
  * @package Phalib
  * @subpackage Widget
  */
-class Widget extends Component implements WidgetInterface
+abstract class Widget extends Component implements WidgetInterface
 {
     /**
      * @var string $viewPath
@@ -28,9 +28,19 @@ class Widget extends Component implements WidgetInterface
     public $viewPath;
 
     /**
+     * @var string $viewFile
+     */
+    public $viewFile;
+
+    /**
      * @var Phalcon\Mvc\View\Simple $view
      */
     public $view;
+
+    /**
+     * @var array $attributes
+     */
+    public $attributes;
 
     /**
      * Widget base constructor
@@ -47,6 +57,29 @@ class Widget extends Component implements WidgetInterface
         $this->initialize($attributes);
     }
 
-    public function initialize()
+    /**
+     * Initialize widget
+     *
+     * @param array $attributes
+     *
+     * @access public
+     * @return void
+     */
+    public function initialize(array $attributes = array())
     {}
+
+    /**
+     * Triggers when the object is called as a string
+     *
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {   
+        if (!empty($this->viewPath) && !empty($this->viewFile)) {
+            return $this->view->render($this->viewFile, $this->attributes);
+        }
+
+        return '';
+    }
 }
