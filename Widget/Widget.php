@@ -43,7 +43,7 @@ class Widget extends Component implements WidgetInterface
     public function __construct(array $attributes = array())
     {
         $this->view = new SimpleView;
-        $this->view->setViewsDir($viewPath);
+        $this->view->setViewsDir($this->viewPath);
         $this->initialize($attributes);
     }
 }
