@@ -46,4 +46,7 @@ class Widget extends Component implements WidgetInterface
         $this->view->setViewsDir($this->viewPath);
         $this->initialize($attributes);
     }
+
+    public function initialize()
+    {}
 }
