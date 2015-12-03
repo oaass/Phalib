@@ -1,0 +1,12 @@
+{
+  "name": "Phalib",
+  "version": "1.0.0",
+  "main": "phalib",
+  "description": "Add on's for PhalconPHP",
+  "author": "https://github.com/oaass",
+  "license": {
+    "type": "",
+    "url": ""
+  },
+  "repository": "https://github.com/oaass/Phalib.git"
+}
