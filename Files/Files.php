@@ -60,7 +60,7 @@ class Files
                 'image/gif', 'image/png', 'image/jpeg', 'image/bmp'
             ],
             'messageType' => 'Invalid file type. Only images are allowed (gif, png, jpg, jpeg)',
-            'messageEmpty' => 'File cannot be empty'
+            'messageEmpty' => ':field cannot be empty'
         ]
     ];
 
@@ -68,6 +68,8 @@ class Files
      * @var array $errors Array of error messages
      */
     public $errors = [];
+
+    public $adapter;
 
     /**
      * Class constructor
@@ -181,17 +183,12 @@ class Files
      */
     public function isValid()
     {
-        foreach ($this->keys as $key) {
-            $validation = new Validation;
-            $file = new FileValidator($this->rules);
-            $validation->add($key, $file);
-            $this->errors = $validation->validate($_FILES);
+        $validation = new Validation;
+        $file = new FileValidator($this->rules);
 
-            if (sizeof($this->errors) > 0) {
-                return false;
-            } 
-        }
+        $validation->bind($file, $this->rawFiles);
+        $this->errors = $validation->validate();
 
-        return true;
+        return (sizeof($this->errors) > 0);
     }
 }

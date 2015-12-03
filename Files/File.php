@@ -74,6 +74,7 @@ class File extends PhalconFile
     {
         parent::__construct($file, $key);
         $this->file = $file;
+        $this->setAdapter(self::ADAPTER_GD);
     }
 
     /**
@@ -154,7 +155,7 @@ class File extends PhalconFile
      * @access public
      * @return mixed
      */
-    public function upload($destination = null, $adapter = self::ADAPTER_GD)
+    public function upload($destination = null, $makeFolder = true)
     {
         if (empty($this->destination) && is_null($destination)) {
             throw new \RuntimeException('Missing upload destination');
@@ -162,9 +163,16 @@ class File extends PhalconFile
 
         $destination = (is_null($destination)) ? $this->destination : $destination;
 
+        $dir = dirname($destination);
+        if (!is_dir($dir) && $makeFolder) {
+            mkdir($dir, 0777, true);
+        }
+
         if (!$this->moveTo($destination)) {
             return false;
         }
+
+        $this->_name = $destination;
 
         if ($this->isImage() && $this->makeThumb) {
             $this->makeThumbnailImage();
@@ -192,12 +200,12 @@ class File extends PhalconFile
                             $this->getExtension()
                         ], $this->thumbName);
 
-        $image =  new $this->adapter($destination);
+        $image =  new $this->adapter($this->getName());
 
         $method = (!$this->thumbCrop) ? 'resize' : 'crop';
-        call_user_func_array([$image, 'crop'], $this->thumbSize);
+        call_user_func_array([$image, $method], $this->thumbSize);
 
-        return ($image->save($this->thumbName));
+        return ($image->save($destination));
     }
 
     /**
