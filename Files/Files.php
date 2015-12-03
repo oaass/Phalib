@@ -189,6 +189,6 @@ class Files
         $validation->bind($file, $this->rawFiles);
         $this->errors = $validation->validate();
 
-        return (sizeof($this->errors) > 0);
+        return (!(sizeof($this->errors) > 0));
     }
 }
