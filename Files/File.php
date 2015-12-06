@@ -16,7 +16,7 @@ use Phalcon\Image\Adapter\Imagick as PhalconImageImagick;
 
 /**
  * Wrapper class for Phalcon\Http\Request\File
- * 
+ *
  * @author Ole Aass <ole@oleaass.com>
  * @package Phalib
  * @subpackage Files
@@ -63,7 +63,7 @@ class File extends PhalconFile
 
     /**
      * File class constructor
-     * 
+     *
      * @param array $file
      * @param mixed $key
      *
@@ -81,7 +81,7 @@ class File extends PhalconFile
      * Set adapter to use with image handling
      *
      * @param string $adapter
-     * 
+     *
      * @access public
      * @return void
      */
@@ -210,7 +210,7 @@ class File extends PhalconFile
 
     /**
      * Rename file on the server
-     * 
+     *
      * @param string $new New path and filename
      *
      * @access public
@@ -227,10 +227,10 @@ class File extends PhalconFile
 
     /**
      * Delete file on server
-     * 
+     *
      * @access public
      * @return boolean
-     */ 
+     */
     public function delete()
     {
         return unlink($this->getName());

@@ -144,7 +144,7 @@ class Files
         $files = [];
         foreach ($list as $item) {
             $file = new \Phalib\Files\File($item[0]);
-            
+
             if (!is_null($this->adapter)) {
                 $file->setAdapter($this->adapter);
             }
